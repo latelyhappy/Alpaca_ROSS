@@ -9,8 +9,8 @@ from alpaca.data.requests import NewsRequest
 app = FastAPI()
 
 # 從 Railway 的環境變數中讀取金鑰
-API_KEY = os.getenv('PKOI2G4CH7KRWGEHTYOQ7K7Q7H')
-API_SECRET = os.getenv('3R7Cc8pYGUKfdhkhgDqMecFuApM81gnVh9HWNToLD9aK')
+API_KEY = os.getenv(PKOI2G4CH7KRWGEHTYOQ7K7Q7H)
+API_SECRET = os.getenv(3R7Cc8pYGUKfdhkhgDqMecFuApM81gnVh9HWNToLD9aK)
 
 @app.get("/")
 def read_root():
