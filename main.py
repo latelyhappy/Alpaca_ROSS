@@ -1,16 +1,20 @@
 import os
 import uvicorn
 from fastapi import FastAPI
+from dotenv import load_dotenv
 from alpaca.data.historical import StockHistoricalDataClient
 from alpaca.data.requests import StockSnapshotRequest
 from alpaca.data.historical.news import NewsClient
 from alpaca.data.requests import NewsRequest
 
+# 載入 .env 檔案中的環境變數 (如果在本地端測試會用到)
+load_dotenv()
+
 app = FastAPI()
 
-# 從 Railway 的環境變數中讀取金鑰
-API_KEY = os.getenv(PKOI2G4CH7KRWGEHTYOQ7K7Q7H)
-API_SECRET = os.getenv(3R7Cc8pYGUKfdhkhgDqMecFuApM81gnVh9HWNToLD9aK)
+# 安全讀取金鑰代號 (真實密碼會從 Railway 後台或 .env 注入)
+API_KEY = os.getenv('ALPACA_API_KEY')
+API_SECRET = os.getenv('ALPACA_API_SECRET')
 
 @app.get("/")
 def read_root():
@@ -19,7 +23,7 @@ def read_root():
 @app.get("/test")
 def test_alpaca():
     if not API_KEY or not API_SECRET:
-        return {"錯誤": "找不到 API 金鑰！請確認 Railway 後台的 Variables 是否有設定。"}
+        return {"錯誤": "找不到 API 金鑰！請確認 Railway 後台的 Variables 或是 .env 檔案是否有設定。"}
         
     try:
         data_client = StockHistoricalDataClient(API_KEY, API_SECRET)
